@@ -1,86 +1,120 @@
-filterArmy = false
-
-const previousStudent = [
+// Data of The Fellowship
+const fellowship = [
   {
   id: 1,
-  name: "Luna Lovegood",
-  house: "Ravenclaw",
-  voldArmy: false,
+  name: "Aragorn",
+  type: "Man",  
+  orcArmy: false
+  
   },
   {
 
   id: 2,
-  name: "Cedric Diggory",
-  house: "Hufflepuff",
-  voldArmy: false,
+  name: "Frodo Baggins",
+  type: "Hobbit",  
+  orcArmy: false
+  
   },
   {
   id: 3,
-  name: "Harry Potter",
-  house: "Griffindor",
-  voldArmy: false,
+  name: "Legolas",
+  type: "Elf", 
+  orcArmy: false
+  
+  
   },
+  
   {
   id: 4,
-  name: "Dolores Umbridge",
-  house:"Slytherin",
-  voldArmy: true,
+  name:"Gimli",
+  type: "Dwarf",   
+  orcArmy: false
+  
   },
+ 
   {
-  id: 5,
-  name:"Albus Potter",
-  house: "Slytherin",
-  voldArmy: false,
+    id: 5,
+    name:"Gandalf The Grey",
+    type: "Wizard",    
+    orcArmy: false
+    
   },
-  {
-    id: 6,
-    name: "Belleatrix Lestrange",
-    house: "Slytherin",
-    voldArmy: true,
-  },
-  {
-    id: 7,
-    name: "Lucius Mallfoy",
-    house: "Slytherin",
-    voldArmy: true
-  }
+
+
 ];
+// Orc Army Data
+const urukHai = [
+  {
+    id: 0,
+    name:"Azog",
+    type: "Ork",     
+    orcArmy: true
+    
+  },
+]
 
 
+// Saruman's Army array
+const sarumanArmy = [];
 
+// Code for rendering to DOM so HTML and JS can connect
+const renderToDom = (divId, htmlToRender) => {
+  const selectedDivID = document.querySelector(divId);
+  selectedDivID.innerHTML = htmlToRender;
+}
 
-const button = document.querySelector('#sortStudent').addEventListener('click', buttonFilter);
-
-
+// forEach to loop through all the travelers
 const cardsOnDom = (array) => {
-  let domString = "";
-  for (const previous of array) {
-    domstring += <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <p class="card-text">Name: ${previous.name}</p>
-      <p class="card-text">House: ${previous.house}</p>
-      <p class="card-text"> Are with Voldemort? ${previous.voldArmy ? "I bow to him" : "He must be defeated!"} </p>
-     </div>
-    </div>
-  }
+  domString =""
+  array.forEach(traveler => {
+    `<div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h3 class="card-title">Name: ${traveler.name}</h3>
+        <h5 class="card-subtitle mb-2 text-body-secondary">I am a/an: ${traveler.type}</h5>
+        <p class="card-text">Are you an Orc by chance? ${traveler.orcArmy ? "I serve the Dark Lord" : "Sauron MUST be destroyed"}</p>
+        <button class="btn btn-dark" id="delete--${traveler.id}--">Cast Into Exile</button>
+      </div>
+    </div>`;
+  })  
+
 }
-const filter = (houseString) => {
-  filterArmy = true; 
-  const houseArray =[];
+renderToDom("#app", divId);
 
-  for (const student of previousStudent) {
-    if (student.house === houseString) {
-      houseArray.push(student);
-    }
-  }
-  cardsOnDom (houseArray)
-}
+cardsOnDom(fellowship)
 
 
 
 
+const showManButton = document.querySelector("#man");
+const showElfButton = document.querySelector("#elf");
+const showHobbitButton = document.querySelector("#hobbit");
+const showWizardButton = document.querySelector("#wizard"); 
+const showDwarfButton = document.querySelector("#dwarf");
+const showAllButton = document.querySelector("#all");
 
 
 
+showAllButton.addeventlistener("click", (e) => {
+  cardsOnDom(fellowship)
+});
 
-// Code for the app to initialize
+showManButton.addeventlistener("click", (e) => {
+  filter("man")
+  console.log(filter("man"))
+});
+
+showElfButton.addeventlistener("click", (e) => {
+  filter("elf")
+});
+
+showHobbitButton.addeventlistener("click", (e) =>{
+  filter("hobbit")
+});
+
+showWizardButton.addeventlistener("click", (e) => {
+  filter("wizard")
+});
+
+showDwarfButton.addeventlistener("click", (e) => {
+  filter("dwarf")
+})
