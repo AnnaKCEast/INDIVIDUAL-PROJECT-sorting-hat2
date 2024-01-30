@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The One Ring Calls</title>
+  <link rel="stylesheet" href="main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+  <!-- Named the App and gave it an ID -->
+  <div id="app"></div>
+
+  <!-- Creating a header, with the Sorting button -->
+  <header>
+    <h1>The Fellowship of the Ring is forming.  </h1>
+    <h3>Who will you become on this journey?!</h3>
+    <div id="sort" class="d-grid gap-2 col-6 mx-auto">
+      <button class="btn btn-success" type="button" id="advButton">I'm Going on an Adventure!</button>      
+    </header>
+
+
+
+
+
+
+<p></p>
+
+<!-- Creating a place for the enemy cards to show -->
+<div id="sauronArmy"></div>
+
+<!-- Creating a place for the fellowship's cards to show -->
+<div id="theFellowship"></div>
+
+
+  <div id="formContainer">
+    <form class="row g-3 needs-validation" novalidate>
+      <div class="col-md-4">
+        <label for="validationCustom" id="studentName">Who goes there?</label>
+        <input type="text" class="form-control" id="validationCustom" value="" required>
+      </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-info" id="sortHobbit">Tell Me! </button>
+      </div>      
+    </form>
+  <div>
+    <p></p>
+  </div>
+  </div> 
+<!-- HOUSE BUTTONS!  -->
+  <div id="fellowButtons">
+    <button type="button" class="btn btn-danger" id="man">Time of Man</button>
+    <button type="button" class="btn btn-primary" id="elf">Time of the Elves</button>
+    <button type="button" class="btn btn-warning" id="hobbit">Tricksy Hobbitses</button>
+    <button type="button" class="btn btn-success" id="wizrd">Wise Wizards</button>
+    <button type="button" class="btn btn-info" id="dwarf">Hairy Dwarfs</button>
+    <button type="button" class="btn btn-secondary" id="all">The Fellowship of the Ring</button>
+    
+    
+    </div>
+
+
+
+  <!-- Scripts for javascript to reference to. Ensure script to main js file is on the bottom -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
