@@ -7,34 +7,28 @@
   <link rel="stylesheet" href="main.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
-<body>
-  <!-- Named the App and gave it an ID -->
-  
-
-  <!-- Creating a header, with the Sorting button -->
+<body id="app">
+  <!-- Creating a header-->
   <header>
     <h1>The Fellowship of the Ring is forming.</h1>
-    <h3>Who will you become on this journey?!</h3>
+    <h3>Who will you become on this journey?</h3>
     <div id="sort" class="d-grid gap-2 col-6 mx-auto">
   </header>   
-   
-    <form  id="hobbitform"> 
-      <button class="btn btn-success" type="submit">I'm Going on an Adventure!</button>          
+  <div id="welcomeBtn"> 
+    <form id="hobbitForm">
+      <button class="btn btn-success" id="formBtn" type="button">I'm Going on an Adventure!</button>
     </form>
- 
+ </div>
 
-  <!--general app div  -->
-<div id="app"></div>
-
-<!-- To call the button group for JS -->
+ <!-- To call the button group for JS -->
 <div id="theGreatBtn"></div>
 
-<!-- Creating a place for the enemy cards to show -->
-<!-- <div id="sauronArmy"></div> -->
-
+<div class="card-group">
 <!-- Creating a place for the fellowship's cards to show -->
-<!-- <div id="theFellowship"></div> -->
-
+<div id="theFellowship"></div>
+<!-- Creating a place for the enemy cards to show -->
+<div id="sauronsArmy"></div>
+</div>
   <!-- Scripts for javascript to reference to. Ensure script to main js file is on the bottom -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="main.js"></script>
