@@ -84,7 +84,7 @@ const cardsOnDom = () => {
       domString += `<div class="card" style="width: 18rem;">
       <div class="d-flex justify-content-start">...
          <div class="card-body">
-         <img src="${traveler.imageUrl}" class="card-img-top">
+         <img src="${traveler.imageUrl}" class="card-img-top"> 
            <h3 class="card-title">Name: ${traveler.name}</h3>
            <h5 class="card-subtitle mb-2 text-body-secondary">I am a/an: ${traveler.type}</h5>
            <p class="card-text">Are you an Orc? ${traveler.orcArmy ? "Indeed, I serve the Dark Lord" : "No! I want the ring destroyed"}</p>
@@ -93,12 +93,12 @@ const cardsOnDom = () => {
          </div>
        </div>`;
     });
-  }else{
+  } else {
   fellowship.forEach((traveler) => {
     domString += `<div class="card" style="width: 18rem;">
     <div class="d-flex justify-content-start">...
-       <div class="card-body">
-       <img src="$https://www.sideshow.com/cdn-cgi/image/quality=90,f=auto/https://www.sideshow.com/storage/product-images/501348UL/the-fellowship-of-the-ring_the-lord-of-the-rings_silo.png" class="card-img-top">
+       <div class="card-body" id="newCard">
+       <!-- <img src="$https://www.sideshow.com/cdn-cgi/image/quality=90,f=auto/https://www.sideshow.com/storage/product-images/501348UL/the-fellowship-of-the-ring_the-lord-of-the-rings_silo.png" class="card-img-top"> -->
          <h3 class="card-title">Name: ${traveler.name}</h3>
          <h5 class="card-subtitle mb-2 text-body-secondary">I am a/an: ${traveler.type}</h5>
          <p class="card-text">Are you an Orc? ${traveler.orcArmy ? "Indeed, I serve the Dark Lord" : "No! I want the ring destroyed"}</p>
@@ -119,7 +119,6 @@ const armyOnDom = () => {
     domString += `<div class="card" style="width: 18rem;">
       <div class="card-body" id:traitorCard>
       <img src="https://preview.redd.it/what-makes-the-dark-lord-sauron-stand-out-amongst-fictional-v0-7lkp7sxb7bqb1.jpg?auto=webp&s=e8833d4c1a66326f91a57512e1aef7f9bf36f71f" class="card-img-top">
-
       <h3 class="card-title">OH NO! You betrayed the followship and joined Sauron's Army. Jerk. </h3>
       </div>
     </div>`;
@@ -151,6 +150,7 @@ const createNewMember = () => {
 // Create randomizer//
 const sortType = {
   id: fellowship.length + 1,
+  imageUrl: "https://www.sideshow.com/cdn-cgi/image/quality=90,f=auto/https://www.sideshow.com/storage/product-images/501348UL/the-fellowship-of-the-ring_the-lord-of-the-rings_silo.png",
   name: document.querySelector("#name").value,
   type: fellowshipTypes [Math.floor(Math.random() * 5)],
   orcArmy: false
@@ -187,7 +187,6 @@ console.log("Number of buttons found", theFellowshipAll.length);
   // TODO includes ('--${travelerId}'
   console.log("Target ID: ",e.target.id);
     // Spliting the array to take traitors to the dark lords army
-    //if (e.target.id.includes("ToTraitor")) { // commented out by Alex
     const [, id] = e.target.id.split("--");
     const travelerId = fellowship.findIndex((e) => e.id === Number(id));
     //  const travel = fellowship.index((b) => b.id === Number(id));
