@@ -1,3 +1,10 @@
+// Code for rendering to DOM so HTML and JS can connect
+const renderToDom = (divId, htmlToRender) => {
+  const selectedDivID = document.querySelector(divId);
+  // console.log(selectedDivID)
+  // console.log(htmlToRender)
+  selectedDivID.innerHTML = htmlToRender;
+};
 
 // Data of The Fellowship
 const fellowship = [
@@ -41,9 +48,8 @@ const fellowship = [
 ];
 
 // Orc Army Data
-const sarumansArmy = [
-  {
-    id: 1,
+const enemyArmy = [{
+    id: 6,
     name: "Lurtz",
     type: "Orc",
     orcArmy: true,
@@ -57,11 +63,6 @@ const sarumansArmy = [
 // Types of the fellowship to sort into
 const fellowshipTypes = ["Mortal", "Elf", "Hobbit", "Wizard", "Dwarf" ]
 
-// Code for rendering to DOM so HTML and JS can connect
-const renderToDom = (divId, htmlToRender) => {
-  const selectedDivID = document.querySelector(divId);
-  selectedDivID.innerHTML = htmlToRender;
-};
 
 // need a function for form on dom 
 // call rendertodom using the domstring the hobbitForm divId 
@@ -72,31 +73,41 @@ const formOnDom = () => {
 renderToDom("#hobbitForm", domString);
 };
 
-// Need to query select button to HTML and have event listener for that click for formBtn ID on the form itself
-const sortBtn = document.querySelector("#formBtn")
-sortBtn.addEventListener("click", formOnDom)
-
-
-
-
-
-
 // forEach to loop through all the travelers
-const cardsOnDom = (fellowship) => {
+const cardsOnDom = () => {
   let domString = "";
+  console.log("Current fellowship:");
+  console.log(fellowship);
+  //fellowship.sort
+  if (typeof fellowshipFilter !== 'undefined'){
+    fellowshipFilter.forEach((traveler) => {
+      domString += `<div class="card" style="width: 18rem;">
+      <div class="d-flex justify-content-start">...
+         <div class="card-body">
+         <img src="${traveler.imageUrl}" class="card-img-top"> 
+           <h3 class="card-title">Name: ${traveler.name}</h3>
+           <h5 class="card-subtitle mb-2 text-body-secondary">I am a/an: ${traveler.type}</h5>
+           <p class="card-text">Are you an Orc? ${traveler.orcArmy ? "Indeed, I serve the Dark Lord" : "No! I want the ring destroyed"}</p>
+           <button class="btn btn-dark" class="buttonId" id="ToTraitor--${traveler.id}">"Traitor!"</button>
+          </div>
+         </div>
+       </div>`;
+    });
+  } else {
   fellowship.forEach((traveler) => {
     domString += `<div class="card" style="width: 18rem;">
     <div class="d-flex justify-content-start">...
-       <div class="card-body">
-        <img src="${traveler.imageUrl}" class="card-img-top">
+       <div class="card-body" id="newCard">
+       <!-- <img src="$https://www.sideshow.com/cdn-cgi/image/quality=90,f=auto/https://www.sideshow.com/storage/product-images/501348UL/the-fellowship-of-the-ring_the-lord-of-the-rings_silo.png" class="card-img-top"> -->
          <h3 class="card-title">Name: ${traveler.name}</h3>
          <h5 class="card-subtitle mb-2 text-body-secondary">I am a/an: ${traveler.type}</h5>
          <p class="card-text">Are you an Orc? ${traveler.orcArmy ? "Indeed, I serve the Dark Lord" : "No! I want the ring destroyed"}</p>
-         <button class="btn btn-dark" id="traitor--${traveler.id}">"Traitor!"</button>
+         <button class="btn btn-dark" class="buttonId" id="ToTraitor--${traveler.id}">"Traitor!"</button>
         </div>
        </div>
      </div>`;
   });
+  };
   renderToDom("#theFellowship", domString);
 };
 
@@ -104,7 +115,7 @@ const cardsOnDom = (fellowship) => {
 // Sauron's Army on Dom caller
 const armyOnDom = () => {
   let domString = "";
-  sarumansArmy.forEach(() => {
+  enemyArmy.forEach(() => {
     domString += `<div class="card" style="width: 18rem;">
       <div class="card-body" id:traitorCard>
       <img src="https://preview.redd.it/what-makes-the-dark-lord-sauron-stand-out-amongst-fictional-v0-7lkp7sxb7bqb1.jpg?auto=webp&s=e8833d4c1a66326f91a57512e1aef7f9bf36f71f" class="card-img-top">
@@ -112,7 +123,8 @@ const armyOnDom = () => {
       </div>
     </div>`;
   });
-  cardsOnDom("#sauronArmy", domString)
+  renderToDom("#sauronsArmy", domString);
+  //cardsOnDom("#sauronsArmy", domString)
 }
 
 // Buttons to show after the initial
@@ -127,6 +139,9 @@ const fellowButtons = () => {
   renderToDom("#theGreatBtn", domString);
 };
 
+// Need to query select button to HTML and have event listener for that click for formBtn ID on the form itself
+const sortBtn = document.querySelector("#formBtn")
+sortBtn.addEventListener("click", formOnDom) 
 
 
 // ****Form input****
@@ -135,6 +150,7 @@ const createNewMember = () => {
 // Create randomizer//
 const sortType = {
   id: fellowship.length + 1,
+  imageUrl: "https://www.sideshow.com/cdn-cgi/image/quality=90,f=auto/https://www.sideshow.com/storage/product-images/501348UL/the-fellowship-of-the-ring_the-lord-of-the-rings_silo.png",
   name: document.querySelector("#name").value,
   type: fellowshipTypes [Math.floor(Math.random() * 5)],
   orcArmy: false
@@ -143,48 +159,58 @@ const sortType = {
  // Pushing new addition card
 fellowship.push(sortType);
 cardsOnDom(fellowship);
+};
 
-
-
-const theFellowship = document.querySelector(".card");
-theFellowship.addEventListener("click", (e) => {
-
-  // Spliting the array to take traitors to the dark lords army
-  if (e.target.id.includes("traitor")) {
-   const [, id] = e.target.id.split("--");
-   const index = fellowship.findIndex((e) => e.id === Number(id));
-  //  const travel = fellowship.index((b) => b.id === Number(id));
-
-   
-    // fellowship.splice(index, 1);
-   sarumansArmy.push(fellowship.splice(index, 1));
-   cardsOnDom(fellowship);
-   armyOnDom(sauronsArmy);
-   console.log("Traitor!")
-   }
- });
-}; 
 
 // Creating the events and query selector for form
 const events = () => {
 const form = document.querySelector("form");
-
-      
   form.addEventListener("submit", (e) => {
     // keep form reset and prevent default together.
     // prevents the form from reseting the webpage.
     e.preventDefault();      
       createNewMember(e);
+      //TraitorID = 3; // try to set one fellow to be eliminated for testing
       fellowButtons();
-      armyOnDom();
+      //armyOnDom();
       form.reset();
       
   });
+
+// event listener for individual cards
+const theFellowshipAll = document.querySelectorAll("#theFellowship");
+console.log("Number of buttons found", theFellowshipAll.length);
+//Array.from(theFellowshipAll).forEach( theF => theF.addEventListener("click", (e) => {
+  theFellowshipAll.forEach( theF => theF.addEventListener("click", (e) => {
+  //TODO get ID off traveler
+  // TODO const travelerId
+  // TODO includes ('--${travelerId}'
+  console.log("Target ID: ",e.target.id);
+    // Spliting the array to take traitors to the dark lords army
+    const [, id] = e.target.id.split("--");
+    const travelerId = fellowship.findIndex((e) => e.id === Number(id));
+    //  const travel = fellowship.index((b) => b.id === Number(id));
+    console.log("travelerId", travelerId);
+
+    
+      // fellowship.splice(index, 1);
+    //enemyArmy.push(...fellowship.splice(travelerId, 1));
+    console.log("Enemy Army length before push ",enemyArmy.length);
+    enemyArmy.push(fellowship[travelerId]);
+    console.log("Enemy Army length after push ",enemyArmy.length);
+
+    //console.log("Fellowship length before splice ",fellowship.length);
+    fellowship.splice(travelerId,1);
+    //console.log("Fellowship length after splice ",fellowship.length);
+    //console.log(enemyArmy.toString);
+    //console.log(fellowship.toString);
+    
+    cardsOnDom(fellowship);
+    armyOnDom(enemyArmy);
+    console.log("Traitor!");
+    //}
+  }));
 };
-
-
-
-
 
 // Using filter to create new arrays for each traveler
 const filter = (travelerType) => {
@@ -207,31 +233,39 @@ const theGreatBtn = document.querySelector("#theGreatBtn");
 
  theGreatBtn.addEventListener("click", (e) => {
   if (e.target.id.includes("mortal")) {
-    const filterMan = fellowship.filter((traveler) => traveler.type === "Mortal");
+    //const filterMan = fellowship.filter((traveler) => traveler.type === "Mortal");
+    fellowshipFilter = fellowship.filter((traveler) => traveler.type === "Mortal");
     console.log("Aragorn");
-    cardsOnDom(filterMan);
+    cardsOnDom();
   }
   else if (e.target.id.includes("elf")) {
-    const filterElf = fellowship.filter((traveler) => traveler.type === "Elf");
+    //const filterElf = fellowship.filter((traveler) => traveler.type === "Elf");
+    fellowshipFilter = fellowship.filter((traveler) => traveler.type === "Elf");
     console.log("Legolas");
-    cardsOnDom(filterElf);
+    cardsOnDom();
   }
   else if (e.target.id.includes("hobbit")) {
-    const filterHobbit = fellowship.filter((traveler) => traveler.type === "Hobbit");
+    //const filterHobbit = fellowship.filter((traveler) => traveler.type === "Hobbit");
+    fellowshipFilter = fellowship.filter((traveler) => traveler.type === "Hobbit");
     console.log("Master Frodo");
-    cardsOnDom(filterHobbit);
+    cardsOnDom();
   }
   else if (e.target.id.includes("wizard")) {
-    const filterWizard = fellowship.filter((traveler) => traveler.type === "Wizard");
+    //const filterWizard = fellowship.filter((traveler) => traveler.type === "Wizard");
+    fellowshipFilter = fellowship.filter((traveler) => traveler.type === "Wizard");
     console.log("FLY you fools! - Gandalf");
-    cardsOnDom(filterWizard);
+    cardsOnDom();
   }
   else if (e.target.id.includes("dwarf")) {
-    const filterDwarf = fellowship.filter((traveler) => traveler.type === "Dwarf");
+    //const filterDwarf = fellowship.filter((traveler) => traveler.type === "Dwarf");
+    fellowshipFilter = fellowship.filter((traveler) => traveler.type === "Dwarf");
     console.log("Nobody tosses a dwarf - Gimli");
-    cardsOnDom(filterDwarf);
+    cardsOnDom();
   }
   else if (e.target.id.includes("all")) {
+    if (typeof fellowshipFilter !== 'undefined'){
+      delete(fellowshipFilter);
+    };
     console.log("The Fellowship");
     cardsOnDom(fellowship);
   }
